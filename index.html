@@ -3,86 +3,153 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Ubus - Replica</title>
-
+  <title>Ubus Chitkara University</title>
   <style>
-    /* Reset & base */
-    *{box-sizing:border-box;margin:0;padding:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;}
-    body{background:#eef3f7;color:#222;min-height:100vh;padding:18px;}
+    :root{
+      --accent:#d32f2f;
+      --green:#2e7d32;
+      --muted:black;
+      --bg:#eef3f7;
+      --card:#fff;
+      --maxw:1200px;
+      --gap:18px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:'Inter', sans-serif;
+      background:var(--bg);
+      color:var(--muted);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.35;
+    }
 
-    /* Top header */
-    .topbar{background:#004b46;height:8px;border-radius:4px 4px 0 0;max-width:1280px;margin:0 auto;}
-    .header{max-width:1280px;margin:0 auto;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid #eee;}
+    /* top strip and header */
+    .topbar{height:8px;background:#004b46;width:100%}
+    header.site-header{
+      width:100%;
+      background:var(--card);
+      display:flex;
+      justify-content:center;
+      border-bottom:1px solid rgba(0,0,0,0.04);
+    }
+    .header-inner{
+      width:min(var(--maxw),96%);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:14px 8px;
+    }
     .brand{display:flex;align-items:center;gap:14px}
-    .brand img{height:48px;}
-    .navlinks{display:flex;gap:22px;align-items:center}
-    .navlinks a{color:#000;text-decoration:none;font-weight:600}
-    .navlinks a.home{color:#d32f2f}
+    .brand img{height:48px;width:auto;display:block}
+    .navlinks{display:flex;gap:20px;align-items:center}
+    .navlinks a{color:#111;text-decoration:none;font-weight:600}
+    .navlinks a.home{color:var(--accent)}
 
-    /* page container */
-    .container{max-width:1280px;margin:22px auto;padding:0 18px;}
+    /* page content */
+    main.container{
+      width:min(var(--maxw),96%);
+      margin:22px auto;
+      padding:0;
+    }
 
     /* user card */
-    .user-card{background:#fff;border-radius:8px;padding:20px;display:flex;align-items:center;gap:18px;box-shadow:0 4px 12px rgba(0,0,0,.04);border-left:4px solid #e64a19}
-    .avatar{width:68px;height:68px;border-radius:50%;overflow:hidden;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.08)}
+    .user-card{
+      background:var(--card);
+      border-radius:8px;
+      display:flex;
+      align-items:center;
+      gap:18px;
+      padding:18px;
+      box-shadow:0 6px 16px rgba(16,24,40,0.06);
+      border-left:4px solid #e64a19;
+    }
+    .avatar{width:68px;height:68px;border-radius:999px;overflow:hidden;flex:0 0 68px;box-shadow:0 2px 6px rgba(0,0,0,0.06)}
     .avatar img{width:100%;height:100%;object-fit:cover;display:block}
-    .user-info h3{font-size:18px;margin-bottom:4px}
-    .user-info p{color:#666;font-size:13px;line-height:1.2}
+    .user-info h3{font-size:18px;margin-bottom:4px;letter-spacing:0.2px}
+    .user-info p{color:var(--muted);font-size:13px;line-height:1.2}
 
-    /* big panel of tiles */
-    .panel{background:#fff;margin-top:26px;padding:22px;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,.04);display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:start;border-left:6px solid #2e7d32;}
-    .tile{display:flex;align-items:center;gap:16px;padding:16px;border-radius:6px;border:1px solid #eee;background:#fafafa}
-    .tile .icon{width:64px;height:64px;border-radius:6px;background:#d32f2f;display:flex;align-items:center;justify-content:center}
-    .tile .icon img{width:48px;height:48px;object-fit:contain;display:block}
-    .tile h4{margin-bottom:6px;color:#c62828;text-decoration:underline;font-size:16px}
-    .tile p{color:#666;font-size:13px}
-
-    /* make Payment Receipt an anchor */
-    .tile-link{display:block;text-decoration:none;color:inherit}
-    .tile-link:hover h4{text-decoration:none}
-
-    /* responsive grid for smaller */
-    @media (max-width:980px){
-      .panel{grid-template-columns:repeat(2,1fr)}
+    /* panel grid (responsive) */
+    .panel{
+      margin-top:22px;
+      background:var(--card);
+      padding:25px;
+      border-radius:8px;
+      box-shadow:0 6px 16px rgba(16,24,40,0.06);
+      border-left:6px solid var(--green);
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+      gap:var(--gap);
+      align-items:start;
     }
-    @media (max-width:640px){
-      .header{padding:14px}
-      .container{padding:0 12px}
-      .panel{grid-template-columns:1fr;gap:12px}
-      .user-card{padding:14px}
+
+    /* tile */
+    .tile{
+      display:flex;
+      gap:14px;
+      align-items:flex-start;
+      padding:14px;
+      border-radius:6px;
+      background:#fff;
+      border:1px solid rgba(0,0,0,0.04);
+      transition:transform .14s ease, box-shadow .14s ease;
+      min-height:84px;
     }
+    .tile:hover{transform:translateY(-4px);box-shadow:0 8px 18px rgba(16,24,40,0.06)}
+    .icon{
+      width:64px;height:64px;border-radius:6px;background:var(--accent);flex:0 0 64px;display:flex;align-items:center;justify-content:center;
+    }
+    .icon img{width:48px;height:48px;object-fit:contain;display:block;}
+    .tile h4{margin:0 0 6px 0;color:var(--accent);font-size:16px;text-decoration:underline}
+    .tile p{margin:0;color:var(--muted);font-size:13px}
+
+    /* anchor link tile */
+    .tile-link{display:flex;text-decoration:none;color:inherit}
+    .tile-link:focus{outline:3px solid rgba(211,47,47,0.12);outline-offset:3px}
+
+    /* small screens adjustments */
+    @media (max-width:540px){
+      .avatar{width:56px;height:56px;flex:0 0 56px}
+      .panel{padding:14px;gap:12px}
+      .tile{padding:12px}
+      .icon{width:56px;height:56px;flex:0 0 56px}
+    }
+
   </style>
 </head>
 <body>
 
-  <div class="topbar"></div>
+  <div class="topbar" aria-hidden="true"></div>
 
-  <header class="header" role="banner">
-    <div class="brand">
-      <img src="cup.png" alt="Chitkara logo" />
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <div class="brand">
+        <img src="cup.png" alt="Chitkara University logo">
+      </div>
+
+      <nav class="navlinks" aria-label="top links">
+        <a href="#" class="home">Home</a>
+        <a href="#">Change Password</a>
+        <a href="#">Logout</a>
+      </nav>
     </div>
-
-    <nav class="navlinks" aria-label="top links">
-      <a href="#" class="home">Home</a>
-      <a href="#">Change Password</a>
-      <a href="#">Logout</a>
-    </nav>
   </header>
 
-  <main class="container">
-    <!-- user card -->
+  <main class="container" role="main">
     <section class="user-card" aria-labelledby="welcome">
-      <div class="avatar"><img src="abhay.jpg" alt="User photo"></div>
+      <div class="avatar"><img src="abhay.jpg" alt="User"></div>
       <div class="user-info">
-        <h3 id="welcome">Hi, AJAY SINGLA</h3>
-        <p>ASHWANI KUMAR SINGLA<br>2510987006</p>
+        <h3 id="welcome">Hi, AAYUSH </h3>
+        <p>ASHWANI KUMAR SINGLA<br>2510987002</p>
       </div>
     </section>
 
-    <!-- main tiles panel -->
-    <section class="panel" aria-label="actions panel">
-      <!-- Payment Receipt (anchor to ubus.html) -->
-      <a href="ubus.html" class="tile tile-link" title="Open Payment Receipt (ubus.html)">
+    <section class="panel" aria-label="action tiles">
+      <!-- Payment Receipt (anchor) -->
+      <a href="ubus.html" class="tile tile-link" title="Payment Receipt - open ubus.html">
         <div class="icon"><img src="logo.jpg" alt=""></div>
         <div>
           <h4>Payment Receipt</h4>
@@ -90,7 +157,6 @@
         </div>
       </a>
 
-      <!-- Non-Disciplinary -->
       <div class="tile">
         <div class="icon"><img src="logo.jpg" alt=""></div>
         <div>
@@ -99,7 +165,6 @@
         </div>
       </div>
 
-      <!-- Transport Allotment -->
       <div class="tile">
         <div class="icon"><img src="logo.jpg" alt=""></div>
         <div>
@@ -108,7 +173,6 @@
         </div>
       </div>
 
-      <!-- Transport Routes -->
       <div class="tile">
         <div class="icon"><img src="logo.jpg" alt=""></div>
         <div>
@@ -117,7 +181,6 @@
         </div>
       </div>
 
-      <!-- Route Cancellation -->
       <div class="tile">
         <div class="icon"><img src="logo.jpg" alt=""></div>
         <div>
@@ -126,10 +189,9 @@
         </div>
       </div>
 
-      <!-- filler to match layout when fewer items -->
-      <div class="tile" style="background:transparent;border:0;box-shadow:none"></div>
+      <!-- spacer tile to help grid alignment if needed -->
+      <div style="background:transparent;border:0;box-shadow:none;min-height:1px;"></div>
     </section>
-
   </main>
 
 </body>
